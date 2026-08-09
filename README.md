@@ -1,7 +1,15 @@
-Implements the core ETL engine (lakehouse_processor.py) for real-time stream consumption and dual-path storage:
-
-- Consumes JSON financial transaction streams from Kafka/Redpanda
-- Enforces a strictly typed Spark schema across incoming event payloads
-- Persists micro-batches into local Delta Lake tables for ACID transactional storage
-- Filters high-risk events (risk_score > 0.70) to generate 384-dimensional embeddings via SentenceTransformers
-- Upserts vector records and metadata into Qdrant DB for downstream RAG and fraud compliance search
+Realtime_Lakehouse_Vector_Engine/
+│
+├── config/
+│   └── pipeline_config.yaml      # Centralized pipeline configuration settings
+├── scripts/
+│   ├── stream_producer.py        # Real-time Kafka/Redpanda event stream generator
+│   └── lakehouse_processor.py    # PySpark Structured Streaming core driver engine
+├── src/
+│   ├── __init__.py               # Python package initialization marker
+│   ├── schema_validator.py       # Pre-ETL schema auditing & nullability validator
+│   ├── vector_indexer.py         # HuggingFace vector embedding & Qdrant upsert engine
+│   └── flight_recorder.py        # Centralized operational audit & execution logger
+├── docker-compose.yml            # Local container orchestration (Redpanda + Qdrant)
+├── requirements.txt              # Core project dependencies & library specifications
+└── README.md                     # System architecture & file documentation
